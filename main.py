@@ -1,44 +1,66 @@
-# AL732960 - MSAF - Busqueda ternaria
+# AL732960 - MSAF - Salto Búsqueda
 
-def btemaria(arreglo, n, llave):
-	mid1 = 0
-	mid2 = 0
-	a = int()
-	b = int()
-	r = n-1
-	l = 0
-	a = 0
-	b = 0
-	while b!=1:
-		mid1 = round(l+(r-l)/3)
-		mid2 = round(r-(r-l)/3)
-		if arreglo[mid1]==llave:
-			respuesta = mid1
-			a = 1
-			b = 1
-		else:
-			if arreglo[mid2]==llave:
-				respuesta = mid2
-				a = 1
-				b = 1
-			else:
-				if arreglo[mid1]>llave:
-					r = mid1-1
-				else:
-					if arreglo[mid2]<llave:
-						l = mid2+1
-					else:
-						l = mid1+1
-						r = mid2-1
-	if a==0:
-		respuesta = -1
-	return respuesta
+from math import sqrt
 
-llave = 6
-n = 10
-arreglo = [1,2,3,4,5,6,7,8,9,10]
-ind = btemaria(arreglo,n,llave)
-if ind!=-1:
-	print("El elemento ",llave," se encontro en el lugar: ",ind)
-else:
-	print("El elemento no se encontro en el arreglo")
+def min(a, b):
+    if b>a:
+        res1 = a
+    else:
+        res1 = b
+    return res1
+
+def salto(arreglo, item, n):
+    bloque = int()
+    res = int()
+    previo = int()
+    bloque = int(sqrt(n))
+    previo = 1
+    while arreglo[min(bloque,n)-1]<item:
+        previo = bloque
+        bloque = bloque+int(sqrt(n))
+        if previo>=n:
+            res = -1
+    while arreglo[previo-1]<item:
+        previo = previo+1
+        if arreglo[previo-1]==item:
+            res = previo-1
+        else:
+            res = -1
+    return res
+
+if __name__ == '__main__':
+    arreglo = int()
+    arreglo = [int() for ind0 in range(16)]
+    arreglo[0] = 0
+    arreglo[1] = 1
+    arreglo[2] = 1
+    arreglo[3] = 2
+    arreglo[4] = 3
+    arreglo[5] = 5
+    arreglo[6] = 8
+    arreglo[7] = 13
+    arreglo[8] = 21
+    arreglo[9] = 55
+    arreglo[10] = 77
+    arreglo[11] = 89
+    arreglo[12] = 101
+    arreglo[13] = 201
+    arreglo[14] = 256
+    arreglo[15] = 780
+    
+    item = int()
+    n = int()
+    busc = int()
+    print("Ingrese valor a buscar: ")
+    item = int(input())
+
+    n = 16
+    busc = salto(arreglo,item,n)
+    if busc>=0:
+        if busc==0:
+            busc = 1
+            print("El numero esta en la posicion: ",busc)
+        else:
+            print("El numero esta en la posicion: ",busc)
+    else:
+        print("No se encontro el numero")
